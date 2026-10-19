@@ -1,4 +1,4 @@
-# Marketing Association NZ — Homepage Prototype
+# Marketing Association NZ Homepage Wireframe
 
 A responsive homepage prototype inspired by the Marketing Association of New Zealand, built using React and CSS.
 
