@@ -1,9 +1,31 @@
+import { useState, useEffect, useRef } from "react";
+
 export default function Homepage() {
+    const [menuOpen, setMenuOpen] = useState(false);
+    const headerRef = useRef(null);
+
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (
+                headerRef.current &&
+                !headerRef.current.contains(event.target)
+            ) {
+                setMenuOpen(false);
+            }
+        }
+
+        document.addEventListener("mousedown", handleClickOutside);
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+
     return (
         <>
             {/* HEADER */}
 
-            <header className="header">
+            <header className="header" ref={headerRef}>
                 <div className="logo">
                     <div className="logoIcon"></div>
                     <span>YOUR COMPANY HERE</span>
@@ -11,7 +33,7 @@ export default function Homepage() {
 
                 {/* Navigation */}
 
-                <nav className="navigation">
+                <nav className={`navigation ${menuOpen ? "open" : ""}`}>
                     <a href="#home">HOME</a>
                     <a href="#cards">NEWS</a>
                     <a href="">ABOUT</a>
@@ -27,8 +49,11 @@ export default function Homepage() {
                     type="button"
                     className="burgerMenu"
                     aria-label="Toggle navigation"
+                    aria-expanded={menuOpen}
+                    aria-controls="mobile-navigation"
+                    onClick={() => setMenuOpen(!menuOpen)}
                 >
-                    ☰ {/* Fancy Burger Character! */}
+                    {menuOpen ? "✕" : "☰"} {/* Responsive menu button */}
                 </button>
             </header>
 
